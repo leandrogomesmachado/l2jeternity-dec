@@ -1,0 +1,31 @@
+package l2e.gameserver.network.serverpackets;
+
+import l2e.gameserver.model.actor.Player;
+
+public class ExValidateLocationInAirShip extends GameServerPacket {
+   private final Player _activeChar;
+   private final int shipId;
+   private final int x;
+   private final int y;
+   private final int z;
+   private final int h;
+
+   public ExValidateLocationInAirShip(Player player) {
+      this._activeChar = player;
+      this.shipId = this._activeChar.getAirShip().getObjectId();
+      this.x = player.getInVehiclePosition().getX();
+      this.y = player.getInVehiclePosition().getY();
+      this.z = player.getInVehiclePosition().getZ();
+      this.h = player.getHeading();
+   }
+
+   @Override
+   protected final void writeImpl() {
+      this.writeD(this._activeChar.getObjectId());
+      this.writeD(this.shipId);
+      this.writeD(this.x);
+      this.writeD(this.y);
+      this.writeD(this.z);
+      this.writeD(this.h);
+   }
+}
